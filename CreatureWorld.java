@@ -6,12 +6,13 @@ import java.util.List;
 /**
  * Write a description of class MyWorld here.
  * 
- * @author (your name) 
+ * @author (Brayden Hall) 
  * @version (a version number or a date)
  */
 public class CreatureWorld extends World
 {
-
+    private Creature playerOneCreature;
+    private Creature playerTwoCreature;
     /**
      * Default constructor for objects of class MyWorld.
      * 
@@ -22,10 +23,28 @@ public class CreatureWorld extends World
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(400, 400, 1); 
-
+        playerOneCreature = new Charmander(this);
+        playerTwoCreature = new Pikachu(this); 
+        
+        prepareCreature();
         Greenfoot.start();
     }
     
+    private void prepareCreature()
+    {
+        addObject( playerOneCreature, playerOneCreature.getImage().getWidth()/2, getHeight()-playerOneCreature.getImage().getHeight()/2);
+        addObject( new Button( Color.RED, 50), getWidth()/2, getHeight() - 100 );
+        addObject( playerTwoCreature, getWidth() - playerTwoCreature.getImage().getWidth()/2, playerTwoCreature.getImage().getHeight()/2);
+        addObject( new Button( Color.RED, 50), getWidth()/2, 100);
+    }
+    public Creature getPlayerOne()
+    {
+        return playerOneCreature;
+    }
+    public Creature getPlayerTwo()
+    {
+        return playerTwoCreature;
+    }
     /**
      * act will complete actions that the CreatureWorld object should
      * accomplish while the scenario is running
@@ -35,6 +54,25 @@ public class CreatureWorld extends World
      */
     public void act()
     {
+        List allObjects=getObjects(null);
+        if (playerTwoCreature. getHealthBar().getCurrent() <=0 )
+        {
+            removeObjects(allObjects);
+            showText("Player Two Wins",getWidth()/2, getHeight()/2);
+            Greenfoot.stop();
+            
+     
+        }
+        
+        if ( playerOneCreature. getHealthBar().getCurrent() <=0 )
+        {
+            removeObjects(allObjects);
+            showText("Player One Wins",getWidth()/2,getHeight()/2);
+            Greenfoot.stop();
+        }
+        
+            
+            
         
     }
 }
