@@ -11,6 +11,7 @@ public class Creature extends Actor
     private int healthNumber;
     private int playerOwnership;
     private HealthBar creatureBar;
+    private String type;
      
     /**
      * Default constructor for objects of the Creature class
@@ -24,7 +25,12 @@ public class Creature extends Actor
         playerOwnership = 0;
         creatureBar = new HealthBar(healthNumber, healthNumber, 10);
     }
-
+    
+    public String getType()
+    {
+        return type;
+    }
+    
     /**
      * Constructor that allows customization of objects of the Creature class
      * 
@@ -32,11 +38,12 @@ public class Creature extends Actor
      * @param whichPlayer discusses whether the creature belongs to player 1 or player 2
      * @return an object of the Creature class
      */
-    public Creature( int health, int whichPlayer )
+    public Creature( int health, int whichPlayer, String creatureType )
     {
         healthNumber = health;
         playerOwnership = whichPlayer;
         creatureBar = new HealthBar(healthNumber, healthNumber, 10);
+        type = creatureType;
     }
     
     protected HealthBar getHealthBar()
@@ -56,7 +63,7 @@ public class Creature extends Actor
      * @param There are no parameters
      * @return Nothing is rreturn eturned
      */
-    public void attack()
+    public void attack(int idx)
     
    
     
