@@ -12,7 +12,7 @@ public class Pikachu extends Creature
 {
     public Pikachu( World w )
     {
-        super(700, 2, "Electric");
+        super(700,false, "Electric");
         getImage().scale(150,100);
         w.addObject( getHealthBar(), 100, 25 );
     }
@@ -31,7 +31,7 @@ public class Pikachu extends Creature
         {
             enemy.getHealthBar().add( -65 );
         }
-        world.setTurnNumber(1);
+        world.setTurnNumber(true);
     }
     /**
      * Act - do whatever the Pikachu wants to do. This method is called whenever

@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Creature extends Actor
 {
     private int healthNumber;
-    private int playerOwnership;
+    private boolean playerOneCreature;
     private HealthBar creatureBar;
     private String type;
      
@@ -22,7 +22,6 @@ public class Creature extends Actor
     public Creature()
     {
         healthNumber = 500;
-        playerOwnership = 0;
         creatureBar = new HealthBar(healthNumber, healthNumber, 10);
     }
     
@@ -38,10 +37,10 @@ public class Creature extends Actor
      * @param whichPlayer discusses whether the creature belongs to player 1 or player 2
      * @return an object of the Creature class
      */
-    public Creature( int health, int whichPlayer, String creatureType )
+    public Creature( int health, boolean isPlayerOne, String creatureType )
     {
         healthNumber = health;
-        playerOwnership = whichPlayer;
+        playerOneCreature = isPlayerOne;
         creatureBar = new HealthBar(healthNumber, healthNumber, 10);
         type = creatureType;
     }
@@ -49,11 +48,11 @@ public class Creature extends Actor
     protected HealthBar getHealthBar()
     {
        return creatureBar;
-    }
+    }                                                                                                                                                                          
     
-    public int getPlayerOwnership()
+    public boolean getPlayerOwnership()
     {
-        return playerOwnership;
+        return playerOneCreature;
     }
     
     

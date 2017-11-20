@@ -16,7 +16,7 @@ public class CreatureWorld extends World
     private boolean playerTwoMenusAdded;
     private Creature playerOneCreature;
     private Creature playerTwoCreature;
-    private boolean playerTurnOne;
+    private boolean playerOneTurn;
     private String playerOneName;
     private String playerTwoName;
     private Menu oneFightMenu;
@@ -35,10 +35,7 @@ public class CreatureWorld extends World
         super(400, 400, 1); 
         playerOneCreature = new Charmander(this);
         playerTwoCreature = new Pikachu(this); 
-        start == true;
-        playerOneTurn = true;
-        
-        
+        start = true;
         prepareCreature();
         Greenfoot.start();
     }
@@ -59,14 +56,14 @@ public class CreatureWorld extends World
         return playerTwoCreature;
     }
     
-    public void setTurnNumber( int turn)
+    public void setTurnNumber( boolean turn)
     {
-        turnNumber = turn;
+        playerOneTurn = turn;
     }
     
-    public int getTurnNumber()
+    public boolean getTurnNumber()
     {
-        return turnNumber;
+        return playerOneTurn;
     }
     
     /**
@@ -82,31 +79,38 @@ public class CreatureWorld extends World
         {
            playerOneName=JOptionPane.showInputDialog("Player One, please enter your name",null);
            playerTwoName=JOptionPane.showInputDialog("Player Two, please enter your name",null);
-           oneFightMenu = new Menu( " Fight ", " Scratch \n Flamethrower ", 24, Color.BLACK, Color.WHITE, Color.BLACK, Color.WHITE, new FightCommands() );
-           oneSwitchMenu = new Menu( " Switch ", " Golem \n Ivysaur ", 24, Color.BLACK, Color.WHITE, Color.BLACK, Color.WHITE, new SwitchCommands() );
-           addObject( oneFightMenu, 173, getHeight() - 100 );
-           addObject( oneFightMenu, 241, getHeight() - 100 );
-           twoFightMenu =  new Menu( " Fight ", " Tackle \n Thunderbolt ", 24, Color.BLACK, Color.WHITE, Color.BLACK, Color.WHITE, new FightCommands() );
-           twoSwitchMenu = new Menu( " Switch ", " Lapras \n Pidgeot ", 24, Color.BLACK, Color.WHITE, Color.BLACK, Color.WHITE, new SwitchCommands() );
-           addObject( twoFightMenu, 133, 75 );
-           addObject( twoFightMenu, 199, 75 );
-           turnNumber = 0;
-           
-           
            playerOneTurn = true;
+           start = false;
         }
-        else if(turnNumber == 0)
+        else if(playerOneTurn == true)
         {
             showText ( playerOneName + "Your Turn" , getWidth()/2, getHeight() / 2);
             showText ( "", getWidth()/2, getHeight()/+26 );
         }
-        else
+        else if(playerOneTurn == false)
         {
             showText ( playerTwoName + " your turn", getWidth()/2, getHeight()/2 );
             showText ( "", getWidth()/2, getHeight()/+26 );
         }
         
-        if 
+        if( playerOneMenusAdded == false )
+        {
+           oneFightMenu = new Menu( " Fight ", " Scratch \n Flamethrower ", 24, Color.BLACK, Color.WHITE, Color.BLACK, Color.WHITE, new FightCommands() );
+           oneSwitchMenu = new Menu( " Switch ", " Golem \n Ivysaur ", 24, Color.BLACK, Color.WHITE, Color.BLACK, Color.WHITE, new SwitchCommands() );
+           addObject( oneFightMenu, 173, getHeight() - 100 );
+           addObject( oneSwitchMenu, 241, getHeight() - 100 );
+           playerOneMenusAdded = true;
+        }
+        
+        if( playerTwoMenusAdded == false )
+        {
+            twoFightMenu =  new Menu( " Fight ", " Tackle \n Thunderbolt ", 24, Color.BLACK, Color.WHITE, Color.BLACK, Color.WHITE, new FightCommands() );
+            twoSwitchMenu = new Menu( " Switch ", " Lapras \n Pidgeot ", 24, Color.BLACK, Color.WHITE, Color.BLACK, Color.WHITE, new SwitchCommands() );
+            addObject( twoFightMenu, 133, 75 );
+            addObject( twoSwitchMenu, 199, 75 );
+            playerTwoMenusAdded = true;
+        }
+            
         
         List allObjects=getObjects(null);
         if (playerTwoCreature. getHealthBar().getCurrent() <=0 )
@@ -114,8 +118,6 @@ public class CreatureWorld extends World
             removeObjects(allObjects);
             showText("Player Two Wins",getWidth()/2, getHeight()/2);
             Greenfoot.stop();
-            
-     
         }
         
         if ( playerOneCreature. getHealthBar().getCurrent() <=0 )
